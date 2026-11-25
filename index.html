@@ -350,3 +350,257 @@ Walang katapusang pasasalamat love sa pagmamahal at pag-aalaga mo sa'kin. Salama
     <figure><img src="images/drink-date.jpg" alt="matcha date" loading="lazy"><figcaption>matcha date</figcaption></figure>
   </div>
 </section>
+
+
+<section class="envelope-wrap">
+  <p class="section-label">A Letter For You</p>
+  <button class="envelope" id="envelope" type="button" aria-expanded="false" aria-controls="letter">
+    <span class="script">tap to open, kinkin</span>
+    <span class="caption">from marmar, with love</span>
+  </button>
+  <div id="letter" class="letter-paper">Hi, King!
+
+This letter contains my words for you to keep and for me to hold on to. I want you to know that you are very special to me, and I really care for you as much as I love you. Thank you for understanding me and accepting the situation we have. Thank you for continuously loving me, trusting me, and being patient with us. I really do love you, and I trust you to keep your word as well. I know that this kind of love is rare nowadays. This waiting season and the distance are hard for both of us, but I still believe that this kind of love still exists, and I believe that we will overcome it, okay? I have a request, my love. My request is for you to be confident and trust me that I will choose you over and over again. This is my request, so do it for me, okay? 🥺 I want to give you peace of mind and assure you that you are the only man I want to love and the only man I want to be with in the future. I love you, my Kinkin! ❤️
+
+(check mo lang &rsquo;tong website kapag namimiss or iniisip mo ako, mwaps! 💋)
+
+— marmar</div>
+</section>
+
+<section class="envelope-wrap">
+  <p class="section-label">His Letter to Me</p>
+  <h2 class="center">kinkin&rsquo;s words</h2>
+  <div class="gallery single">
+    <figure><img src="images/king-letter.jpg" alt="King's letter" loading="lazy"><figcaption>9.22.26</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <div class="closing"><span class="verse">&ldquo;For where your treasure is, there your heart will be also.&rdquo; &mdash; Matthew 6:21</span>
+King, I want to share this verse with you because somehow, when I read it, pumasok ka sa isip ko.
+
+Before anything else, I dedicate this verse to the Lord, because He will always be the greatest treasure of my heart. Everything I feel and everything I value, I want to surrender to Him first. And maybe one of the reasons He allowed you to come into my life is for me to experience a kind of love that feels genuine, peaceful, and special.
+
+I want you to know na I treasure you. Hindi lang because of the feelings I have for you, but because I’m genuinely grateful that God allowed our paths to meet. You became someone I care about, someone I think about, someone I pray for, and someone I’m thankful to have in my life.
+
+I don’t want my love for you to ever come before my love for God. Instead, I want God to be at the center of whatever I feel for you. I want to love you with patience, respect, sincerity, and a heart that seeks God first.
+
+So if ever you wonder how much you mean to me, maybe this verse explains it better than I could. You are someone my heart has learned to treasure, King. And while my heart belongs to God first, I’m grateful that He allowed a special place in it for you.
+
+I don’t know what God has planned for us, but whatever it is, I’m thankful for you. And if loving someone means praying for them, appreciating them, and wishing the best for them, then I’m happy that you became someone I can treasure in that way.</div>
+</section>
+
+<section>
+  <a class="drive-btn" href="https://drive.google.com/drive/folders/1hd0blZr8k6jmo2TCXxBOeOMfpe0Wo1G2?usp=sharing" target="_blank" rel="noopener">See all our pics &amp; vids &rarr;</a>
+</section>
+
+<footer>code with love, for kinkin &middot; marmar</footer>
+
+<script>
+// ---------- dates (month is 0-based: 0 = Jan, 11 = Dec) ----------
+const START    = new Date(2025, 11, 12); // started talking, Dec 12, 2025 (also the 1st anniversary date)
+const OFFICIAL = new Date(2026, 9, 17);  // official, Oct 17, 2026; monthsary is the 17th of every month
+const ANNIV    = new Date(2026, 11, 12); // 1st anniversary, Dec 12, 2026
+
+// ---------- helpers ----------
+const $ = (id) => document.getElementById(id);
+
+// whole calendar days from a to b (safe across daylight saving)
+function daysBetween(a, b) {
+  const ua = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const ub = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+  return Math.round((ub - ua) / 86400000);
+}
+
+function ordinal(n) {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function monthsaryDate(n) {
+  return new Date(OFFICIAL.getFullYear(), OFFICIAL.getMonth() + n, 17);
+}
+
+function fmt(d) {
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function plural(n, word) {
+  return n + ' ' + word + (n === 1 ? '' : 's');
+}
+
+// a few hearts floating up on special days
+function floatHearts() {
+  for (let i = 0; i < 16; i++) {
+    const h = document.createElement('span');
+    h.className = 'float-heart';
+    h.textContent = '\u2764';
+    h.setAttribute('aria-hidden', 'true');
+    h.style.left = Math.random() * 95 + 'vw';
+    h.style.fontSize = 14 + Math.random() * 18 + 'px';
+    h.style.animationDelay = Math.random() * 3 + 's';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 10000);
+  }
+}
+
+// ---------- days of us ----------
+function updateCounter() {
+  const el = $('counter');
+  if (!el) return;
+  el.textContent = daysBetween(START, new Date()) + ' days of us';
+}
+
+// ---------- monthsary ----------
+let celebrated = false;
+function updateMonthsary() {
+  const now = new Date();
+  // n = how many monthsaries have been reached so far (today counts)
+  let n = 0;
+  while (daysBetween(monthsaryDate(n + 1), now) >= 0) n++;
+  const next = monthsaryDate(n + 1);
+  const left = daysBetween(now, next);
+  const isToday = n >= 1 && daysBetween(monthsaryDate(n), now) === 0;
+
+  const title = $('ms-title');
+  const big = $('ms-days');
+  const sub = $('ms-sub');
+  const wrap = $('heart-wrap');
+  if (!title || !big || !sub || !wrap) return;
+
+  if (isToday) {
+    title.textContent = 'Happy ' + ordinal(n) + ' monthsary, kinkin!';
+    big.textContent = 'today';
+    sub.textContent = 'I love you, today and every 17th.';
+    wrap.classList.add('fast');
+    if (!celebrated) { celebrated = true; floatHearts(); }
+  } else {
+    title.textContent = n >= 1 ? ordinal(n) + ' monthsary' : 'officially us';
+    big.textContent = plural(left, 'day') + ' to go';
+    sub.textContent = 'until our ' + ordinal(n + 1) + ' monthsary \u00b7 ' + fmt(next);
+    wrap.classList.remove('fast');
+  }
+}
+
+// ---------- 1st anniversary gift lock ----------
+function setupAnniversary() {
+  const btn = $('lock-btn');
+  const recap = $('recap');
+  const title = $('anniv-title');
+  const sub = $('anniv-sub');
+  const msg = $('lock-msg');
+  if (!btn || !recap) return;
+  const preview = new URLSearchParams(location.search).get('preview') === 'recap';
+  const daysLeft = () => daysBetween(new Date(), ANNIV);
+  const ready = () => preview || daysLeft() <= 0;
+
+  function render() {
+    const open = ready();
+    btn.classList.toggle('unlocked', open);
+    if (btn.classList.contains('opened')) return;
+    if (open) {
+      title.textContent = 'your gift is ready, kinkin';
+      sub.textContent = 'tap the lock to open it';
+    } else {
+      title.textContent = 'our 1st anniversary gift';
+      sub.textContent = fmt(ANNIV) + ' \u00b7 ' + plural(daysLeft(), 'day') + ' to go';
+    }
+  }
+
+  btn.addEventListener('click', () => {
+    if (!ready()) {
+      btn.classList.remove('shake');
+      void btn.offsetWidth;
+      btn.classList.add('shake');
+      msg.textContent = 'not yet, kinkin. It opens on ' + fmt(ANNIV) + ', in ' + plural(daysLeft(), 'day') + '.';
+      return;
+    }
+    msg.textContent = '';
+    btn.classList.add('opened');
+    btn.setAttribute('aria-expanded', 'true');
+    title.textContent = 'happy 1st anniversary, kinkin';
+    sub.textContent = 'from marmar, with all my love';
+    recap.hidden = false;
+    const days = $('year-days');
+    if (days) days.textContent = daysBetween(START, ANNIV);
+    if (daysLeft() === 0) floatHearts();
+    recap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  render();
+}
+
+// ---------- monthly letters link ----------
+function setupLetters() {
+  const btn = $('letters-btn');
+  if (!btn) return;
+  if (btn.getAttribute('href').indexOf('PASTE_YOUR') !== -1) {
+    btn.classList.add('soon');
+    btn.removeAttribute('target');
+    btn.setAttribute('aria-disabled', 'true');
+    btn.textContent = 'letters coming soon';
+    btn.addEventListener('click', (e) => e.preventDefault());
+  }
+}
+
+// ---------- envelope ----------
+function setupEnvelope() {
+  const env = $('envelope');
+  const letter = $('letter');
+  if (!env || !letter) return;
+  env.addEventListener('click', () => {
+    env.setAttribute('aria-expanded', String(letter.classList.toggle('open')));
+  });
+}
+
+// ---------- anniversary gift: unwrap one by one ----------
+function setupGift() {
+  const items = Array.from(document.querySelectorAll('.gift-item'));
+  const progress = $('gift-progress');
+  if (!items.length) return;
+  let opened = 0;
+
+  function lockState() {
+    items.forEach((item, i) => {
+      const btn = item.querySelector('.gift-wrap');
+      btn.disabled = i > opened;
+      btn.setAttribute('aria-label', 'Unwrap gift ' + (i + 1));
+    });
+    if (progress) {
+      progress.textContent = opened >= items.length
+        ? 'all ' + items.length + ' unwrapped. I love you, kinkin.'
+        : 'tap gift ' + (opened + 1) + ' to unwrap it (' + opened + ' of ' + items.length + ' opened)';
+    }
+  }
+
+  items.forEach((item, i) => {
+    const btn = item.querySelector('.gift-wrap');
+    const reveal = item.querySelector('.gift-reveal');
+    btn.addEventListener('click', () => {
+      if (i > opened) return;
+      btn.hidden = true;
+      reveal.hidden = false;
+      if (i === opened) opened++;
+      lockState();
+      reveal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+  lockState();
+}
+
+function refresh() {
+  updateCounter();
+  updateMonthsary();
+}
+
+refresh();
+setupLetters();
+setupEnvelope();
+setupGift();
+setupAnniversary();
+setInterval(refresh, 60000);
+</script>
+</body>
+</html>
+
